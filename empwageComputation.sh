@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 #constants are written in Captital letters only
 IS_FULLTIME=1
@@ -10,6 +10,8 @@ MAX_HRS_IN_MONTH=100
 #variable
 totalEmpHrs=0
 totalWorkingDays=0
+
+declare -A dailyWage
 
 function getWorkingHrs()
 {
@@ -39,10 +41,10 @@ do
    empCheck=$((RANDOM%3))
    empHrs=$( getWorkingHrs $empCheck )
    totalEmpHrs=$(($totalEmpHrs+$empHrs))
-	dailyWage[$totalWorkingDays]=$( getEmpWage $empHrs )
+	dailyWage["Day "$totalWorkingDays]=$( getEmpWage $empHrs )
 done
 
 totalSalary=$(($totalEmpHrs*$EMP_RATE_PER_HR))
 echo $totalSalary
-echo ${dailyWage[@]}
-
+echo Daily wages ${dailyWage[@]}
+echo All keys ${!dailyWage[@]}
